@@ -11,7 +11,7 @@
     <style>
         :root {
             --bg-deep: #05050d;
-            --bg-card: rgba(15, 15, 30, 0.75);
+            --bg-card: rgba(15, 15, 30, 0.85);
             --primary-blue: #2a52be;
             --bright-blue: #00d2ff;
             --purple-dark: #1f0c38;
@@ -19,7 +19,7 @@
             --purple-glow: #bd00ff;
             --text-light: #e0e6ed;
             --text-muted: #94a3b8;
-            --border-glow: rgba(138, 43, 226, 0.3);
+            --border-glow: rgba(138, 43, 226, 0.4);
         }
 
         * {
@@ -33,14 +33,15 @@
             background-color: var(--bg-deep);
             color: var(--text-light);
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(31, 12, 56, 0.6) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(42, 82, 190, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 15% 15%, rgba(31, 12, 56, 0.7) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(42, 82, 190, 0.5) 0%, transparent 45%),
                 radial-gradient(circle at 50% 50%, rgba(5, 5, 13, 1) 0%, transparent 100%);
             background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* Partículas de Fundo Animadas */
@@ -57,14 +58,14 @@
         .particle {
             position: absolute;
             border-radius: 50%;
-            background: rgba(138, 43, 226, 0.2);
+            background: rgba(138, 43, 226, 0.25);
             box-shadow: 0 0 10px var(--purple-glow);
             animation: float 15s infinite ease-in-out;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
-            50% { transform: translateY(-100px) scale(1.2); opacity: 0.7; }
+            50% { transform: translateY(-100px) scale(1.3); opacity: 0.8; }
         }
 
         /* Header e Título */
@@ -72,8 +73,7 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: 40px 20px 20px;
-            background: linear-gradient(180deg, rgba(10, 10, 25, 0.9) 0%, transparent 100%);
+            padding: 30px 20px 10px;
         }
 
         header h1 {
@@ -84,7 +84,7 @@
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
         }
 
@@ -94,14 +94,14 @@
             letter-spacing: 1px;
         }
 
-        /* Navegação por Abas (Páginas) */
+        /* Navegação Superior */
         nav {
             position: relative;
             z-index: 10;
             display: flex;
             justify-content: center;
-            gap: 12px;
-            padding: 10px 20px;
+            gap: 10px;
+            padding: 15px 20px;
             flex-wrap: wrap;
         }
 
@@ -109,24 +109,20 @@
             background: rgba(20, 20, 45, 0.8);
             color: var(--text-muted);
             border: 1px solid var(--border-glow);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.4s ease;
             backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .nav-btn:hover {
             color: #fff;
             border-color: var(--bright-blue);
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
-            transform: translateY(-2px);
         }
 
         .nav-btn.active {
@@ -136,48 +132,90 @@
             box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
         }
 
-        /* Área de Conteúdo Principal */
-        main {
+        /* Área do Carrossel e Conteúdo */
+        .carousel-wrapper {
             position: relative;
             z-index: 10;
-            max-width: 1000px;
-            margin: 20px auto 40px;
-            padding: 0 20px;
-            flex-grow: 1;
+            max-width: 950px;
+            margin: 10px auto 30px;
+            padding: 0 60px;
             width: 100%;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
         }
 
-        /* Estilo das "Páginas" */
-        .page {
-            display: none;
+        /* Botões de Seta Laterais (Navegação) */
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(15, 15, 35, 0.9);
+            border: 1px solid var(--border-glow);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .arrow-btn:hover {
+            background: var(--purple-accent);
+            border-color: var(--bright-blue);
+            box-shadow: 0 0 20px var(--bright-blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .arrow-btn.prev { left: 0; }
+        .arrow-btn.next { right: 0; }
+
+        /* Contêiner de Slides */
+        .slides-container {
+            width: 100%;
+            position: relative;
+            min-height: 520px;
+        }
+
+        /* Estilo Individual dos Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(138, 43, 226, 0.1);
-            backdrop-filter: blur(15px);
-            animation: fadeInPage 0.6s ease forwards;
+            border-radius: 24px;
+            padding: 35px 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(138, 43, 226, 0.15);
+            backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(30px) scale(0.98);
         }
 
-        .page.active {
-            display: block;
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
         }
 
-        @keyframes fadeInPage {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .slide.slide-left {
+            transform: translateX(-30px) scale(0.98);
         }
 
         /* Títulos Internos */
         h2 {
             font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             color: #fff;
             margin-bottom: 20px;
             border-bottom: 2px solid var(--purple-glow);
@@ -217,18 +255,18 @@
 
         /* Destaques e Caixas Especiais */
         .highlight-box {
-            background: linear-gradient(135deg, rgba(31, 12, 56, 0.8) 0%, rgba(42, 82, 190, 0.3) 100%);
+            background: linear-gradient(135deg, rgba(31, 12, 56, 0.9) 0%, rgba(42, 82, 190, 0.4) 100%);
             border-left: 4px solid var(--purple-glow);
             padding: 20px;
             border-radius: 0 12px 12px 0;
-            margin: 25px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Tabela Personalizada na Página 4 */
+        /* Tabela Personalizada */
         .table-container {
             overflow-x: auto;
-            margin-top: 25px;
+            margin-top: 20px;
             border-radius: 12px;
             border: 1px solid var(--border-glow);
         }
@@ -237,7 +275,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            background: rgba(10, 10, 25, 0.6);
+            background: rgba(10, 10, 25, 0.7);
         }
 
         th {
@@ -245,7 +283,7 @@
             color: #fff;
             font-family: 'Cinzel', serif;
             padding: 16px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             letter-spacing: 1px;
         }
 
@@ -253,10 +291,11 @@
             padding: 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             vertical-align: top;
+            font-size: 0.95rem;
         }
 
         tr:hover {
-            background: rgba(138, 43, 226, 0.08);
+            background: rgba(138, 43, 226, 0.1);
         }
 
         /* CONTAINER DE PERSONAGENS E ANIMAÇÕES */
@@ -264,15 +303,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 25px 0;
-            height: 180px;
-            position: relative;
+            margin: 15px 0 25px;
+            height: 150px;
         }
 
-        /* SVG Personagem - Pág 1: Marina Pensativa com Pílula Animada */
+        /* SVG Personagem - Pág 1: Pílula Animada */
         .char-pill {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
         }
         .pill-organism {
             animation: pulseGlow 3s infinite ease-in-out;
@@ -290,28 +328,39 @@
             100% { transform: rotate(360deg) translate(35px) rotate(-360deg); }
         }
 
-        /* SVG Personagem - Pág 2: Alarme / Relógio de Precisão */
-        .clock-char {
-            animation: ringBell 2s infinite ease-in-out;
-            transform-origin: top center;
+        /* SVG Personagem - Pág 2: RELÓGIO NORMAL (Ponteiros Contínuos Realistas) */
+        .clock-svg {
+            width: 140px;
+            height: 140px;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
         }
-        @keyframes ringBell {
-            0%, 100% { transform: rotate(0deg); }
-            10%, 30% { transform: rotate(8deg); }
-            20%, 40% { transform: rotate(-8deg); }
-            50% { transform: rotate(0deg); }
+        .hour-hand {
+            animation: rotateHand 43200s linear infinite; /* 12 horas por volta */
+            transform-origin: 100px 100px;
+        }
+        .minute-hand {
+            animation: rotateHand 3600s linear infinite; /* 60 min por volta */
+            transform-origin: 100px 100px;
+        }
+        .second-hand {
+            animation: rotateHand 60s linear infinite; /* 60 seg por volta (movimento suave contínuo) */
+            transform-origin: 100px 100px;
+        }
+        @keyframes rotateHand {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        /* SVG Personagem - Pág 3: Opções / Calendário Sem Estresse */
+        /* SVG Personagem - Pág 3: Calendário */
         .calendar-char {
-            animation: bounceSoft 2s infinite ease-in-out;
+            animation: bounceSoft 2.5s infinite ease-in-out;
         }
         @keyframes bounceSoft {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
-        /* SVG Personagem - Pág 4: Comparativo / Balança Futurista */
+        /* SVG Personagem - Pág 4: Balança */
         .scale-left {
             animation: scaleMove 3s infinite ease-in-out;
             transform-origin: center;
@@ -325,12 +374,12 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* SVG Personagem - Pág 5: Escudo de Proteção (ISTs) */
+        /* SVG Personagem - Pág 5: Escudo de Proteção */
         .shield-char {
             animation: shieldPulse 2.5s infinite ease-in-out;
         }
         .shield-spark {
-            animation: sparkRotate 6s infinite linear;
+            animation: sparkRotate 8s infinite linear;
             transform-origin: 100px 100px;
         }
         @keyframes shieldPulse {
@@ -340,6 +389,32 @@
         @keyframes sparkRotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+
+        /* Indicador de Páginas em Pontos */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--bright-blue);
+            box-shadow: 0 0 10px var(--bright-blue);
+            width: 25px;
+            border-radius: 10px;
         }
 
         /* Rodapé */
@@ -352,14 +427,18 @@
             font-size: 0.85rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             background: rgba(5, 5, 13, 0.9);
+            margin-top: auto;
         }
 
         /* Responsividade */
         @media (max-width: 768px) {
+            .carousel-wrapper { padding: 0 10px; }
+            .arrow-btn { display: none; } /* Em telas móveis usa o toque/botões */
             header h1 { font-size: 1.8rem; }
-            .nav-btn { font-size: 0.85rem; padding: 10px 16px; }
-            .page { padding: 25px; }
-            h2 { font-size: 1.4rem; }
+            .nav-btn { font-size: 0.8rem; padding: 8px 14px; }
+            .slide { padding: 25px 20px; }
+            h2 { font-size: 1.3rem; }
+            .slides-container { min-height: 600px; }
         }
     </style>
 </head>
@@ -374,266 +453,303 @@
         <p>Estudo de Caso: Marina e a Saúde Reprodutiva</p>
     </header>
 
-    <!-- Navegação Interativa entre Páginas -->
+    <!-- Navegação por Abas Principais -->
     <nav>
-        <button class="nav-btn active" onclick="switchPage(1)">
-            <span>01.</span> Funcionamento
-        </button>
-        <button class="nav-btn" onclick="switchPage(2)">
-            <span>02.</span> Importância do Uso
-        </button>
-        <button class="nav-btn" onclick="switchPage(3)">
-            <span>03.</span> Opções Não Diárias
-        </button>
-        <button class="nav-btn" onclick="switchPage(4)">
-            <span>04.</span> Comparativo
-        </button>
-        <button class="nav-btn" onclick="switchPage(5)">
-            <span>05.</span> Proteção contra ISTs
-        </button>
+        <button class="nav-btn active" onclick="goToSlide(0)">01. Funcionamento</button>
+        <button class="nav-btn" onclick="goToSlide(1)">02. Importância do Uso</button>
+        <button class="nav-btn" onclick="goToSlide(2)">03. Opções Não Diárias</button>
+        <button class="nav-btn" onclick="goToSlide(3)">04. Comparativo</button>
+        <button class="nav-btn" onclick="goToSlide(4)">05. Proteção contra ISTs</button>
     </nav>
 
-    <!-- Conteúdo Principal -->
-    <main>
+    <!-- Carrossel com Botões de Setas -->
+    <div class="carousel-wrapper">
+        <!-- Seta Esquerda -->
+        <button class="arrow-btn prev" onclick="prevSlide()" title="Página Anterior">&#10094;</button>
 
-        <!-- PÁGINA 1 -->
-        <article id="page-1" class="page active">
-            <h2>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                Como funciona a pílula anticoncepcional?
-            </h2>
+        <div class="slides-container">
 
-            <div class="character-container">
-                <!-- Personagem/Animação SVG: Pílula e Bloqueio Hormonal -->
-                <svg class="char-pill" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#bd00ff" />
-                            <stop offset="100%" stop-color="#00d2ff" />
-                        </linearGradient>
-                    </defs>
-                    <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(138, 43, 226, 0.2)" stroke-width="4" />
-                    <!-- Núcleo Celular/Ovário Protegido -->
-                    <circle class="pill-organism" cx="100" cy="100" r="40" fill="url(#pillGrad)" />
-                    <!-- Partículas Hormonais Orbitando -->
-                    <circle class="hormone-particle" cx="100" cy="100" r="7" fill="#00d2ff" />
-                    <circle class="hormone-particle" cx="100" cy="100" r="5" fill="#bd00ff" style="animation-delay: -2s;" />
-                </svg>
-            </div>
+            <!-- SLIDE 1 -->
+            <article class="slide active">
+                <h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    Como funciona a pílula anticoncepcional?
+                </h2>
 
-            <p>A pílula anticoncepcional oral combinada é composta por hormônios sintéticos similares aos produzidos naturalmente pelo organismo feminino: o <strong>estrogênio</strong> e o <strong>progestágeno</strong>.</p>
-            
-            <p>O mecanismo principal de ação consiste em:</p>
-            <ul>
-                <li><strong>Inibição da Ovulação:</strong> Os hormônios emitem sinais ao cérebro (hipófise) para interromper a liberação dos hormônios FSH e LH, impedindo que os ovários amadureçam e liberem o óvulo.</li>
-                <li><strong>Alteração do Muco Cervical:</strong> O muco produzido no colo do útero se torna significativamente mais espesso e denso, criando uma barreira física que dificulta o deslocamento dos espermatozoides.</li>
-                <li><strong>Modificação do Endométrio:</strong> A camada interna do útero permanece fina e inóspita, prevenindo o processo de nidação (fixação de um eventual óvulo fertilizado).</li>
-            </ul>
-        </article>
+                <div class="character-container">
+                    <svg class="char-pill" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#bd00ff" />
+                                <stop offset="100%" stop-color="#00d2ff" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(138, 43, 226, 0.2)" stroke-width="4" />
+                        <circle class="pill-organism" cx="100" cy="100" r="40" fill="url(#pillGrad)" />
+                        <circle class="hormone-particle" cx="100" cy="100" r="7" fill="#00d2ff" />
+                        <circle class="hormone-particle" cx="100" cy="100" r="5" fill="#bd00ff" style="animation-delay: -2s;" />
+                    </svg>
+                </div>
 
-        <!-- PÁGINA 2 -->
-        <article id="page-2" class="page">
-            <h2>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Por que é importante utilizá-la corretamente?
-            </h2>
+                <p>A pílula anticoncepcional oral combinada é composta por hormônios sintéticos similares aos produzidos pelo organismo feminino: o <strong>estrogênio</strong> e o <strong>progestágeno</strong>.</p>
+                
+                <p>Seus mecanismos de ação incluem:</p>
+                <ul>
+                    <li><strong>Inibição da Ovulação:</strong> Interrompe a liberação dos hormônios FSH e LH no cérebro, impedindo o amadurecimento do óvulo.</li>
+                    <li><strong>Alteração do Muco Cervical:</strong> Torna o muco no colo uterino espesso, criando uma barreira aos espermatozoides.</li>
+                    <li><strong>Modificação do Endométrio:</strong> Mantém o revestimento uterino inadequado para a fixação do óvulo (nidação).</li>
+                </ul>
+            </article>
 
-            <div class="character-container">
-                <!-- Personagem/Animação SVG: Relógio Bio-Digital Interativo -->
-                <svg width="160" height="160" viewBox="0 0 200 200">
-                    <g class="clock-char">
-                        <circle cx="100" cy="100" r="60" fill="none" stroke="#8a2be2" stroke-width="6"/>
-                        <circle cx="100" cy="40" r="8" fill="#00d2ff"/>
-                        <circle cx="160" cy="100" r="8" fill="#00d2ff"/>
-                        <circle cx="100" cy="160" r="8" fill="#00d2ff"/>
-                        <circle cx="40" cy="100" r="8" fill="#00d2ff"/>
-                        <line x1="100" y1="100" x2="100" y2="60" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-                        <line x1="100" y1="100" x2="130" y2="100" stroke="#bd00ff" stroke-width="4" stroke-linecap="round"/>
-                        <circle cx="100" cy="100" r="6" fill="#fff"/>
-                    </g>
-                </svg>
-            </div>
+            <!-- SLIDE 2 -->
+            <article class="slide">
+                <h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Por que é importante utilizá-la corretamente?
+                </h2>
 
-            <p>A máxima eficácia da pílula anticoncepcional depende inteiramente do rigor na rotina de uso. A ingestão diária no mesmo horário garante que os níveis hormonais no sangue permaneçam constantes e estáveis.</p>
+                <div class="character-container">
+                    <!-- RELÓGIO COM MOVIMENTO NORMAL E SUAVE -->
+                    <svg class="clock-svg" viewBox="0 0 200 200">
+                        <!-- Mostrador do Relógio -->
+                        <circle cx="100" cy="100" r="85" fill="rgba(15, 15, 35, 0.8)" stroke="#8a2be2" stroke-width="5"/>
+                        <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(0, 210, 255, 0.2)" stroke-width="2"/>
+                        
+                        <!-- Marcadores das Horas (12, 3, 6, 9) -->
+                        <line x1="100" y1="25" x2="100" y2="35" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="175" y1="100" x2="165" y2="100" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="100" y1="175" x2="100" y2="165" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="25" y1="100" x2="35" y2="100" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
 
-            <div class="highlight-box">
-                <p><strong>O Risco das Falhas:</strong> Esquecimentos, atrasos frequentes ou alterações na rotina diária provocam oscilações nos níveis hormonais sanguíneos. Essa queda pode permitir que o organismo reinicie o ciclo natural e libere um óvulo, reduzindo drasticamente a proteção e elevando o risco de gravidez não planejada.</p>
-            </div>
+                        <!-- Ponteiro das Horas (Lento) -->
+                        <line class="hour-hand" x1="100" y1="100" x2="100" y2="60" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+                        
+                        <!-- Ponteiro dos Minutos (Médio) -->
+                        <line class="minute-hand" x1="100" y1="100" x2="100" y2="42" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
+                        
+                        <!-- Ponteiro dos Segundos (Rotação Suave) -->
+                        <line class="second-hand" x1="100" y1="100" x2="100" y2="30" stroke="#bd00ff" stroke-width="2" stroke-linecap="round"/>
 
-            <p>No caso de Marina, as dificuldades de adaptação ao horário fixo diário tornam esse método vulnerável a falhas operacionais, justificando a busca por alternativas de longa duração.</p>
-        </article>
+                        <!-- Centro do Relógio -->
+                        <circle cx="100" cy="100" r="6" fill="#fff" stroke="#bd00ff" stroke-width="2"/>
+                    </svg>
+                </div>
 
-        <!-- PÁGINA 3 -->
-        <article id="page-3" class="page">
-            <h2>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                Quais métodos não precisam de uso diário?
-            </h2>
+                <p>A eficácia da pílula exige uso rigoroso. A ingestão diária no mesmo horário mantém os níveis hormonais sanguíneos constantes e estáveis.</p>
 
-            <div class="character-container">
-                <!-- Personagem/Animação SVG: Calendário e Liberdade -->
-                <svg class="calendar-char" width="160" height="160" viewBox="0 0 200 200">
-                    <rect x="40" y="40" width="120" height="120" rx="15" fill="rgba(31, 12, 56, 0.9)" stroke="#00d2ff" stroke-width="4"/>
-                    <path d="M 40 70 L 160 70" stroke="#8a2be2" stroke-width="4"/>
-                    <circle cx="70" cy="100" r="8" fill="#bd00ff"/>
-                    <circle cx="100" cy="100" r="8" fill="#bd00ff"/>
-                    <circle cx="130" cy="100" r="8" fill="#bd00ff"/>
-                    <circle cx="70" cy="130" r="8" fill="#00d2ff"/>
-                    <!-- Checagem / Sucesso -->
-                    <path d="M110 130 L125 145 L150 115" fill="none" stroke="#00d2ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+                <div class="highlight-box">
+                    <p><strong>Efeito das Atrasos:</strong> Esquecimentos ou variações de horário causam quedas hormonais. Isso pode disparar a ovulação de forma imprevista, reduzindo a eficácia do método e elevando o risco de gravidez.</p>
+                </div>
 
-            <p>Para pacientes que buscam praticidade e independência de lembretes diários, a medicina dispõe dos Métodos Contraceptivos Reversíveis de Longa Ação (LARC) e de aplicação periódica:</p>
+                <p>Como Marina tem dificuldades para manter essa rotina diária, recomenda-se a transição para um método que não exija lembrança diária.</p>
+            </article>
 
-            <ul>
-                <li><strong>Implante Subdérmico:</strong> Pequeno bastão flexível inserido sob a pele do braço que libera progestágeno de forma contínua por até 3 anos.</li>
-                <li><strong>DIU Hormonal (Mirena / Kyleena):</strong> Dispositivo inserido na cavidade uterina que libera levonorgestrel por 3 a 8 anos.</li>
-                <li><strong>DIU de Cobre / Prata:</strong> Dispositivo não hormonal de longa duração (até 10 anos) que cria um ambiente espermicida no útero.</li>
-                <li><strong>Injeções Contraceptivas:</strong> Aplicações musculares realizadas mensalmente ou a cada 3 meses.</li>
-                <li><strong>Anel Vaginal:</strong> Anel flexível de uso mensal (permanece 3 semanas e é retirado por 1 semana).</li>
-                <li><strong>Adesivo Cutâneo:</strong> Aplicado sobre a pele e substituído semanalmente durante 3 semanas consecutivas.</li>
-            </ul>
-        </article>
+            <!-- SLIDE 3 -->
+            <article class="slide">
+                <h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Quais métodos não precisam de uso diário?
+                </h2>
 
-        <!-- PÁGINA 4 -->
-        <article id="page-4" class="page">
-            <h2>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"/><path d="M18 8l4 4-4 4"/><path d="M22 12H11"/></svg>
-                Comparativo: DIU Hormonal vs. Implante Subdérmico
-            </h2>
+                <div class="character-container">
+                    <svg class="calendar-char" width="140" height="140" viewBox="0 0 200 200">
+                        <rect x="40" y="40" width="120" height="120" rx="15" fill="rgba(31, 12, 56, 0.9)" stroke="#00d2ff" stroke-width="4"/>
+                        <path d="M 40 70 L 160 70" stroke="#8a2be2" stroke-width="4"/>
+                        <circle cx="70" cy="100" r="8" fill="#bd00ff"/>
+                        <circle cx="100" cy="100" r="8" fill="#bd00ff"/>
+                        <circle cx="130" cy="100" r="8" fill="#bd00ff"/>
+                        <circle cx="70" cy="130" r="8" fill="#00d2ff"/>
+                        <path d="M110 130 L125 145 L150 115" fill="none" stroke="#00d2ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
 
-            <div class="character-container">
-                <!-- Personagem/Animação SVG: Balança de Comparação Futurista -->
-                <svg width="200" height="140" viewBox="0 0 200 140">
-                    <line x1="100" y1="20" x2="100" y2="120" stroke="#8a2be2" stroke-width="4"/>
-                    <line x1="40" y1="40" x2="160" y2="40" stroke="#00d2ff" stroke-width="4"/>
-                    <!-- Prato Esquerdo -->
-                    <g class="scale-left">
-                        <line x1="40" y1="40" x2="20" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                        <line x1="40" y1="40" x2="60" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                        <rect x="15" y="80" width="50" height="10" rx="5" fill="#bd00ff"/>
-                    </g>
-                    <!-- Prato Direito -->
-                    <g class="scale-right">
-                        <line x1="160" y1="40" x2="140" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                        <line x1="160" y1="40" x2="180" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                        <rect x="135" y="80" width="50" height="10" rx="5" fill="#00d2ff"/>
-                    </g>
-                </svg>
-            </div>
+                <p>Opções modernas de longa duração (LARC) ou de aplicação não diária:</p>
 
-            <p>Comparamos duas das opções mais recomendadas para o perfil de Marina:</p>
+                <ul>
+                    <li><strong>Implante Subdérmico:</strong> Bastão inserido no braço com liberação contínua por até 3 anos.</li>
+                    <li><strong>DIU Hormonal:</strong> Dispositivo uterino que atua por 3 a 8 anos.</li>
+                    <li><strong>DIU de Cobre/Prata:</strong> Opção não hormonal com duração de até 10 anos.</li>
+                    <li><strong>Injeções Contraceptivas:</strong> Aplicações com frequência mensal ou trimestral.</li>
+                    <li><strong>Anel Vaginal:</strong> Troca realizada a cada 3 semanas.</li>
+                    <li><strong>Adesivo Cutâneo:</strong> Substituição semanal por 3 semanas consecutivas.</li>
+                </ul>
+            </article>
 
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Método</th>
-                            <th>Vantagens</th>
-                            <th>Limitações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>DIU Hormonal</strong><br><small style="color:var(--bright-blue);">Duração: 3 a 8 anos</small></td>
-                            <td>
-                                • Ação local concentrada no útero.<br>
-                                • Reduz significativamente o fluxo e as cólicas menstruais.<br>
-                                • Não requer nenhuma intervenção após inserido.
-                            </td>
-                            <td>
-                                • Exige procedimento de inserção por ginecologista.<br>
-                                • Pode causar pequenos sangramentos irregulares (escapamentos) nos primeiros meses.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Implante Subdérmico</strong><br><small style="color:var(--bright-blue);">Duração: 3 anos</small></td>
-                            <td>
-                                • Método de maior eficácia contraceptiva existente.<br>
-                                • Inserção rápida no braço sob anestesia local.<br>
-                                • Totalmente discreto e imperceptível.
-                            </td>
-                            <td>
-                                • Custo inicial mais elevado.<br>
-                                • Pode alterar o padrão do ciclo menstrual (causar ausência de menstruação ou sangramentos sutis contínuos).
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </article>
+            <!-- SLIDE 4 -->
+            <article class="slide">
+                <h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"/><path d="M18 8l4 4-4 4"/><path d="M22 12H11"/></svg>
+                    Comparativo: DIU Hormonal vs. Implante Subdérmico
+                </h2>
 
-        <!-- PÁGINA 5 -->
-        <article id="page-5" class="page">
-            <h2>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Proteção contra ISTs (Infecções Sexualmente Transmissíveis)
-            </h2>
+                <div class="character-container">
+                    <svg width="180" height="130" viewBox="0 0 200 140">
+                        <line x1="100" y1="20" x2="100" y2="120" stroke="#8a2be2" stroke-width="4"/>
+                        <line x1="40" y1="40" x2="160" y2="40" stroke="#00d2ff" stroke-width="4"/>
+                        <g class="scale-left">
+                            <line x1="40" y1="40" x2="20" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <line x1="40" y1="40" x2="60" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <rect x="15" y="80" width="50" height="10" rx="5" fill="#bd00ff"/>
+                        </g>
+                        <g class="scale-right">
+                            <line x1="160" y1="40" x2="140" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <line x1="160" y1="40" x2="180" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                            <rect x="135" y="80" width="50" height="10" rx="5" fill="#00d2ff"/>
+                        </g>
+                    </svg>
+                </div>
 
-            <div class="character-container">
-                <!-- Personagem/Animação SVG: Escudo de Barreira Celular -->
-                <svg class="shield-char" width="160" height="160" viewBox="0 0 200 200">
-                    <path class="shield-spark" d="M100 20 L160 50 V110 C160 150 100 180 100 180 C100 180 40 150 40 110 V50 Z" fill="none" stroke="url(#pillGrad)" stroke-width="6"/>
-                    <path d="M100 35 L145 60 V105 C145 138 100 162 100 162 C100 162 55 138 55 105 V60 Z" fill="rgba(0, 210, 255, 0.2)"/>
-                    <path d="M85 100 L95 110 L120 85" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Método</th>
+                                <th>Vantagens</th>
+                                <th>Limitações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>DIU Hormonal</strong><br><small style="color:var(--bright-blue);">Duração: 3 a 8 anos</small></td>
+                                <td>
+                                    • Ação local no útero.<br>
+                                    • Reduz o fluxo e cólicas.<br>
+                                    • Sem necessidade de ação diária.
+                                </td>
+                                <td>
+                                    • Requer inserção por ginecologista.<br>
+                                    • Possíveis pequenos sangramentos nos primeiros meses.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Implante Subdérmico</strong><br><small style="color:var(--bright-blue);">Duração: 3 anos</small></td>
+                                <td>
+                                    • Maior taxa de eficácia disponível.<br>
+                                    • Aplicação simples no braço.<br>
+                                    • Discreto e prático.
+                                </td>
+                                <td>
+                                    • Custo inicial elevado.<br>
+                                    • Alterações no padrão de sangramento menstrual.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
 
-            <div class="highlight-box" style="border-left-color: var(--bright-blue);">
-                <p style="font-size: 1.15rem; color: #fff;"><strong>Resposta Direta:</strong> Não. Nem a pílula anticoncepcional nem qualquer outro método hormonal ou de longa duração (como DIU ou Implante) oferecem proteção contra Infecções Sexualmente Transmissíveis.</p>
-            </div>
+            <!-- SLIDE 5 -->
+            <article class="slide">
+                <h2>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Proteção contra ISTs (Infecções Sexualmente Transmissíveis)
+                </h2>
 
-            <p>Os métodos hormonais previnem exclusivamente a gestação ao atuarem no sistema reprodutivo feminino. O único método capaz de criar uma barreira física eficaz contra patógenos (vírus, bactérias e fungos) transmissíveis pela via sexual — como HIV, Sífilis, Gonorreia e HPV — é o <strong>preservativo (camisinha masculina ou feminina)</strong>.</p>
+                <div class="character-container">
+                    <svg class="shield-char" width="140" height="140" viewBox="0 0 200 200">
+                        <path class="shield-spark" d="M100 20 L160 50 V110 C160 150 100 180 100 180 C100 180 40 150 40 110 V50 Z" fill="none" stroke="url(#pillGrad)" stroke-width="6"/>
+                        <path d="M100 35 L145 60 V105 C145 138 100 162 100 162 C100 162 55 138 55 105 V60 Z" fill="rgba(0, 210, 255, 0.2)"/>
+                        <path d="M85 100 L95 110 L120 85" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
 
-            <p><strong>Recomendação Médica:</strong> Para garantir saúde integral, orienta-se a estratégia de <em>Dupla Proteção</em>, associando o uso do preservativo (proteção contra ISTs) ao método contraceptivo de longa duração escolhido por Marina (proteção contra gravidez não planejada).</p>
-        </article>
+                <div class="highlight-box" style="border-left-color: var(--bright-blue);">
+                    <p style="font-size: 1.1rem; color: #fff;"><strong>Resposta Direta:</strong> Não. Nem a pílula nem outros métodos hormonais ou de longa duração (como DIU e Implante) protegem contra ISTs.</p>
+                </div>
 
-    </main>
+                <p>Os métodos hormonais previnem a gestação. O único método com barreira física capaz de proteger contra ISTs (como HIV, Sífilis e HPV) é a <strong>camisinha (preservativo)</strong>.</p>
+
+                <p><strong>Orientação:</strong> Recomenda-se a <em>Dupla Proteção</em>, associando o uso da camisinha a um método contraceptivo de longa duração escolhido por Marina.</p>
+            </article>
+
+        </div>
+
+        <!-- Seta Direita -->
+        <button class="arrow-btn next" onclick="nextSlide()" title="Próxima Página">&#10095;</button>
+    </div>
+
+    <!-- Indicador de Pontos das Páginas -->
+    <div class="dots-container" id="dotsContainer"></div>
 
     <!-- Rodapé -->
     <footer>
-        <p>Trabalho de Biologia &copy; 2026 — Desenvolvido em HTML/CSS Interativo</p>
+        <p>Trabalho de Biologia &copy; 2026 — Apresentação Interativa em HTML/CSS</p>
     </footer>
 
-    <!-- Script de Alternância das Páginas e Partículas -->
+    <!-- Scripts de Controle -->
     <script>
-        // Função para trocar de página (Aba)
-        function switchPage(pageNumber) {
-            // Esconde todas as páginas
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const dotsContainer = document.getElementById('dotsContainer');
 
-            // Remove classe ativa dos botões
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+        // Criação dos pontos (dots) de navegação
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
 
-            // Mostra a página selecionada e ativa o botão correspondente
-            document.getElementById(`page-${pageNumber}`).classList.add('active');
-            buttons[pageNumber - 1].classList.add('active');
+        const dots = document.querySelectorAll('.dot');
 
-            // Rola suavemente para o topo do conteúdo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function updateSlides(direction = 'next') {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'slide-left');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('slide-left');
+                }
+            });
+
+            navBtns.forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentSlide);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
         }
 
-        // Criador de Partículas de Fundo Animadas
-        const particleContainer = document.getElementById('particles');
-        const particleCount = 20;
+        function goToSlide(index) {
+            const direction = index > currentSlide ? 'next' : 'prev';
+            currentSlide = index;
+            updateSlides(direction);
+        }
 
-        for (let i = 0; i < particleCount; i++) {
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides('next');
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides('prev');
+        }
+
+        // Navegação via teclas de seta no teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Partículas de Fundo
+        const particleContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
-            
             const size = Math.random() * 6 + 2;
             particle.style.width = `${size}px`;
             particle.style.height = `${size}px`;
-            
             particle.style.left = `${Math.random() * 100}%`;
             particle.style.top = `${Math.random() * 100}%`;
-            
             particle.style.animationDelay = `${Math.random() * 15}s`;
             particle.style.animationDuration = `${10 + Math.random() * 10}s`;
-            
             particleContainer.appendChild(particle);
         }
     </script>
