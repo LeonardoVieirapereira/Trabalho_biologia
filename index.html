@@ -44,8 +44,8 @@
             position: relative;
         }
 
-        /* Partículas e Micro-organismos de Fundo Animados */
-        .bg-microorganisms {
+        /* Canvas de Fundo Interativo e Fluido para Micro-organismos Gigantes */
+        #bgCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -53,25 +53,6 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
-        }
-
-        .micro-organism {
-            position: absolute;
-            opacity: 0.22;
-            animation: floatMicro 22s infinite ease-in-out;
-            filter: drop-shadow(0 0 6px var(--purple-glow));
-        }
-
-        @keyframes floatMicro {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg) scale(1);
-                opacity: 0.15;
-            }
-            50% {
-                transform: translateY(-120px) rotate(180deg) scale(1.15);
-                opacity: 0.35;
-            }
         }
 
         /* Header e Título */
@@ -151,7 +132,7 @@
             align-items: center;
         }
 
-        /* Botões de Seta Laterais (Navegação) */
+        /* Botões de Seta Laterais */
         .arrow-btn {
             position: absolute;
             top: 50%;
@@ -203,7 +184,7 @@
             border-radius: 24px;
             padding: 35px 40px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(138, 43, 226, 0.15);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(18px);
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(30px) scale(0.98);
         }
@@ -334,7 +315,7 @@
             100% { transform: rotate(360deg) translate(35px) rotate(-360deg); }
         }
 
-        /* SVG Personagem - Pág 2: RELÓGIO NORMAL (Ponteiros Contínuos Realistas) */
+        /* SVG Personagem - Pág 2: Relógio */
         .clock-svg {
             width: 140px;
             height: 140px;
@@ -380,7 +361,7 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* SVG Personagem - Pág 5: Escudo de Proteção */
+        /* SVG Personagem - Pág 5: Escudo */
         .shield-char {
             animation: shieldPulse 2.5s infinite ease-in-out;
         }
@@ -397,7 +378,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* SVG Personagem - Pág 6: Conclusão / O Fim */
+        /* SVG Personagem - Pág 6: Estrela Fim */
         .end-star {
             animation: starPulse 2s infinite ease-in-out;
         }
@@ -406,7 +387,7 @@
             50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--purple-glow)); }
         }
 
-        /* Indicador de Páginas em Pontos */
+        /* Indicador de Páginas */
         .dots-container {
             display: flex;
             justify-content: center;
@@ -445,7 +426,6 @@
             margin-top: auto;
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             .carousel-wrapper { padding: 0 10px; }
             .arrow-btn { display: none; }
@@ -459,8 +439,8 @@
 </head>
 <body>
 
-    <!-- Micro-organismos Decorativos Animados no Fundo (Vírus, Bactérias e Fungos) -->
-    <div class="bg-microorganisms" id="microContainer"></div>
+    <!-- Canvas de Animação em Tempo Real (Micro-organismos em Grande Quantidade e Movimento Suave) -->
+    <canvas id="bgCanvas"></canvas>
 
     <!-- Cabeçalho -->
     <header>
@@ -468,7 +448,7 @@
         <p>Estudo de Caso: Marina e a Saúde Reprodutiva</p>
     </header>
 
-    <!-- Navegação por Abas Principais -->
+    <!-- Navegação por Abas -->
     <nav>
         <button class="nav-btn active" onclick="goToSlide(0)">01. Funcionamento</button>
         <button class="nav-btn" onclick="goToSlide(1)">02. Importância</button>
@@ -478,9 +458,8 @@
         <button class="nav-btn" onclick="goToSlide(5)">06. Conclusão / Fim</button>
     </nav>
 
-    <!-- Carrossel com Botões de Setas -->
+    <!-- Carrossel -->
     <div class="carousel-wrapper">
-        <!-- Seta Esquerda -->
         <button class="arrow-btn prev" onclick="prevSlide()" title="Página Anterior">&#10094;</button>
 
         <div class="slides-container">
@@ -525,7 +504,6 @@
                 </h2>
 
                 <div class="character-container">
-                    <!-- RELÓGIO COM MOVIMENTO NORMAL E SUAVE -->
                     <svg class="clock-svg" viewBox="0 0 200 200">
                         <circle cx="100" cy="100" r="85" fill="rgba(15, 15, 35, 0.8)" stroke="#8a2be2" stroke-width="5"/>
                         <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(0, 210, 255, 0.2)" stroke-width="2"/>
@@ -675,7 +653,6 @@
                 </h2>
 
                 <div class="character-container">
-                    <!-- SVG Animado de Estrela / Selo de Conclusão -->
                     <svg class="end-star" width="140" height="140" viewBox="0 0 200 200">
                         <circle cx="100" cy="100" r="75" fill="rgba(31, 12, 56, 0.8)" stroke="url(#pillGrad)" stroke-width="5"/>
                         <polygon points="100,35 120,75 165,80 130,112 140,155 100,132 60,155 70,112 35,80 80,75" fill="#00d2ff"/>
@@ -695,11 +672,10 @@
 
         </div>
 
-        <!-- Seta Direita -->
         <button class="arrow-btn next" onclick="nextSlide()" title="Próxima Página">&#10095;</button>
     </div>
 
-    <!-- Indicador de Pontos das Páginas -->
+    <!-- Indicador de Pontos -->
     <div class="dots-container" id="dotsContainer"></div>
 
     <!-- Rodapé -->
@@ -707,14 +683,14 @@
         <p>Trabalho de Biologia &copy; 2026 — Apresentação Interativa em HTML/CSS</p>
     </footer>
 
-    <!-- Scripts de Controle -->
+    <!-- Scripts de Controle e Animação no Canvas -->
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const navBtns = document.querySelectorAll('.nav-btn');
         const dotsContainer = document.getElementById('dotsContainer');
 
-        // Criação dos pontos (dots) de navegação
+        // Indicadores (dots)
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -745,9 +721,8 @@
         }
 
         function goToSlide(index) {
-            const direction = index > currentSlide ? 'next' : 'prev';
             currentSlide = index;
-            updateSlides(direction);
+            updateSlides();
         }
 
         function nextSlide() {
@@ -760,58 +735,240 @@
             updateSlides('prev');
         }
 
-        // Navegação via teclas de seta no teclado
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-            }
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
         });
 
-        // Gerador de Decorativos Biológicos de Fundo (Vírus, Bactérias e Fungos em SVG)
-        const microContainer = document.getElementById('microContainer');
+        /* ==========================================================================
+           SISTEMA DE ANIMAÇÃO DE MICRO-ORGANISMOS (CANVAS) - MAIORES, MAIS NUMEROSOS E EM MOVIMENTO FLUIDO
+           ========================================================================== */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
 
-        const microTypes = [
-            // 1. VÍRUS (Spiro/Corona)
-            `<svg width="50" height="50" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="28" fill="#8a2be2"/>
-                <circle cx="50" cy="12" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="50" y2="12" stroke="#00d2ff" stroke-width="3"/>
-                <circle cx="50" cy="88" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="50" y2="88" stroke="#00d2ff" stroke-width="3"/>
-                <circle cx="12" cy="50" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="12" y2="50" stroke="#00d2ff" stroke-width="3"/>
-                <circle cx="88" cy="50" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="88" y2="50" stroke="#00d2ff" stroke-width="3"/>
-                <circle cx="23" cy="23" r="5" fill="#bd00ff"/><line x1="50" y1="50" x2="23" y2="23" stroke="#bd00ff" stroke-width="3"/>
-                <circle cx="77" cy="77" r="5" fill="#bd00ff"/><line x1="50" y1="50" x2="77" y2="77" stroke="#bd00ff" stroke-width="3"/>
-            </svg>`,
-            // 2. BACTÉRIA (Bacilo com Flagelos)
-            `<svg width="60" height="40" viewBox="0 0 120 80">
-                <rect x="25" y="20" width="70" height="40" rx="20" fill="#2a52be" stroke="#00d2ff" stroke-width="3"/>
-                <path d="M 10 25 Q 0 40 10 55" fill="none" stroke="#bd00ff" stroke-width="3" stroke-linecap="round"/>
-                <path d="M 5 15 Q -10 40 5 65" fill="none" stroke="#8a2be2" stroke-width="3" stroke-linecap="round"/>
-            </svg>`,
-            // 3. FUNGO (Cogumelo / Esporo)
-            `<svg width="50" height="50" viewBox="0 0 100 100">
-                <path d="M 20 50 Q 50 10 80 50 Z" fill="#bd00ff" stroke="#00d2ff" stroke-width="3"/>
-                <rect x="42" y="50" width="16" height="35" rx="5" fill="#2a52be"/>
-                <circle cx="38" cy="35" r="4" fill="#fff"/>
-                <circle cx="62" cy="35" r="4" fill="#fff"/>
-                <circle cx="50" cy="25" r="3" fill="#fff"/>
-            </svg>`
-        ];
-
-        // Criar 18 elementos espalhados no fundo
-        for (let i = 0; i < 18; i++) {
-            const div = document.createElement('div');
-            div.classList.add('micro-organism');
-            div.innerHTML = microTypes[i % microTypes.length];
-            
-            div.style.left = `${Math.random() * 92}%`;
-            div.style.top = `${Math.random() * 90}%`;
-            div.style.animationDelay = `${Math.random() * 20}s`;
-            div.style.animationDuration = `${18 + Math.random() * 12}s`;
-            
-            microContainer.appendChild(div);
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Tipos: 0 = Vírus Esférico, 1 = Bactéria Bacilo, 2 = Fungo / Esporo, 3 = Bacteriófago, 4 = Espiroqueta
+        class Microorganism {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                // Tamanho bastante aumentado (entre 45px e 110px de raio/dimensão)
+                this.size = Math.random() * 35 + 40; 
+                this.type = Math.floor(Math.random() * 5);
+                
+                // Velocidade de movimento continuo
+                this.vx = (Math.random() - 0.5) * 1.2;
+                this.vy = (Math.random() - 0.5) * 1.2;
+                
+                // Rotação contínua
+                this.angle = Math.random() * Math.PI * 2;
+                this.vRot = (Math.random() - 0.5) * 0.015;
+                
+                // Oscilação de pulsação
+                this.pulse = Math.random() * Math.PI * 2;
+                this.pulseSpeed = Math.random() * 0.03 + 0.01;
+                
+                // Opacidade e cores brilhantes bio-luminescentes
+                this.alpha = Math.random() * 0.25 + 0.18;
+                
+                const colors = [
+                    { main: '#8a2be2', glow: '#bd00ff', accent: '#00d2ff' }, // Roxo/Ciano
+                    { main: '#00d2ff', glow: '#0055ff', accent: '#ffffff' }, // Azul Neon
+                    { main: '#bd00ff', glow: '#ff00aa', accent: '#00d2ff' }, // Magenta/Rosa
+                    { main: '#10b981', glow: '#00ff88', accent: '#a7f3d0' }  // Verde Bio
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.angle += this.vRot;
+                this.pulse += this.pulseSpeed;
+
+                // Reaparecer nas bordas (Wrap-around fluído)
+                const margin = this.size * 2;
+                if (this.x < -margin) this.x = canvas.width + margin;
+                if (this.x > canvas.width + margin) this.x = -margin;
+                if (this.y < -margin) this.y = canvas.height + margin;
+                if (this.y > canvas.height + margin) this.y = -margin;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.globalAlpha = this.alpha;
+
+                const currentSize = this.size + Math.sin(this.pulse) * 4;
+
+                switch (this.type) {
+                    case 0: // VÍRUS CORONAVÍRUS / ESPÍCULA
+                        ctx.beginPath();
+                        ctx.arc(0, 0, currentSize * 0.5, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color.main;
+                        ctx.shadowColor = this.color.glow;
+                        ctx.shadowBlur = 20;
+                        ctx.fill();
+
+                        // Espículas (Proteínas de superfície)
+                        const spikes = 12;
+                        for (let i = 0; i < spikes; i++) {
+                            const a = (i * Math.PI * 2) / spikes;
+                            const sx = Math.cos(a) * (currentSize * 0.5);
+                            const sy = Math.sin(a) * (currentSize * 0.5);
+                            const ex = Math.cos(a) * (currentSize * 0.85);
+                            const ey = Math.sin(a) * (currentSize * 0.85);
+
+                            ctx.beginPath();
+                            ctx.moveTo(sx, sy);
+                            ctx.lineTo(ex, ey);
+                            ctx.strokeStyle = this.color.glow;
+                            ctx.lineWidth = 4;
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+                            ctx.fillStyle = this.color.accent;
+                            ctx.fill();
+                        }
+                        break;
+
+                    case 1: // BACTÉRIA BACILO COM FLAGELOS
+                        ctx.beginPath();
+                        const w = currentSize * 1.2;
+                        const h = currentSize * 0.55;
+                        ctx.roundRect(-w / 2, -h / 2, w, h, h / 2);
+                        ctx.fillStyle = this.color.main;
+                        ctx.shadowColor = this.color.glow;
+                        ctx.shadowBlur = 18;
+                        ctx.fill();
+                        ctx.strokeStyle = this.color.accent;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        // Flagelos Ondulantes
+                        ctx.beginPath();
+                        ctx.moveTo(-w / 2, 0);
+                        const wave = Math.sin(this.pulse * 2) * 10;
+                        ctx.bezierCurveTo(-w / 2 - 20, wave, -w / 2 - 40, -wave, -w / 2 - 60, wave);
+                        ctx.strokeStyle = this.color.glow;
+                        ctx.lineWidth = 3;
+                        ctx.stroke();
+                        break;
+
+                    case 2: // FUNGO / ESPORO E HIFAS
+                        ctx.beginPath();
+                        ctx.arc(0, 0, currentSize * 0.4, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color.main;
+                        ctx.shadowColor = this.color.glow;
+                        ctx.shadowBlur = 15;
+                        ctx.fill();
+
+                        // Ramos/Hifas
+                        for (let i = 0; i < 5; i++) {
+                            const ang = (i * Math.PI * 2) / 5;
+                            const hx = Math.cos(ang) * (currentSize * 0.8);
+                            const hy = Math.sin(ang) * (currentSize * 0.8);
+                            ctx.beginPath();
+                            ctx.moveTo(0, 0);
+                            ctx.lineTo(hx, hy);
+                            ctx.strokeStyle = this.color.accent;
+                            ctx.lineWidth = 3;
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.arc(hx, hy, 7, 0, Math.PI * 2);
+                            ctx.fillStyle = this.color.glow;
+                            ctx.fill();
+                        }
+                        break;
+
+                    case 3: // BACTERIÓFAGO (Vírus complexo)
+                        ctx.beginPath();
+                        // Cabeça icosaédrica (círculo estilizado/hexágono)
+                        const headR = currentSize * 0.35;
+                        for (let i = 0; i < 6; i++) {
+                            const a = (i * Math.PI) / 3;
+                            const px = Math.cos(a) * headR;
+                            const py = Math.sin(a) * headR;
+                            if (i === 0) ctx.moveTo(px, py);
+                            else ctx.lineTo(px, py);
+                        }
+                        ctx.closePath();
+                        ctx.fillStyle = this.color.glow;
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = this.color.main;
+                        ctx.fill();
+
+                        // Cauda
+                        ctx.beginPath();
+                        ctx.moveTo(0, headR);
+                        ctx.lineTo(0, headR + 25);
+                        ctx.strokeStyle = this.color.accent;
+                        ctx.lineWidth = 4;
+                        ctx.stroke();
+
+                        // Patas
+                        for (let side = -1; side <= 1; side += 2) {
+                            ctx.beginPath();
+                            ctx.moveTo(0, headR + 25);
+                            ctx.lineTo(side * 20, headR + 45);
+                            ctx.strokeStyle = this.color.glow;
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        }
+                        break;
+
+                    case 4: // ESPIROQUETA (Bactéria em Espiral)
+                        ctx.beginPath();
+                        ctx.moveTo(-currentSize, 0);
+                        for (let x = -currentSize; x <= currentSize; x += 5) {
+                            const y = Math.sin((x / 12) + this.pulse) * 15;
+                            ctx.lineTo(x, y);
+                        }
+                        ctx.strokeStyle = this.color.accent;
+                        ctx.lineWidth = 4;
+                        ctx.shadowColor = this.color.glow;
+                        ctx.shadowBlur = 15;
+                        ctx.stroke();
+                        break;
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // Instanciar uma GRANDE QUANTIDADE de micro-organismos (40 unidades)
+        const microCount = 40;
+        const microList = [];
+        for (let i = 0; i < microCount; i++) {
+            microList.push(new Microorganism());
+        }
+
+        // Loop Principal de Animação
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            microList.forEach(micro => {
+                micro.update();
+                micro.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
 </body>
 </html>
