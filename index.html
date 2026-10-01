@@ -11,7 +11,7 @@
     <style>
         :root {
             --bg-deep: #05050d;
-            --bg-card: rgba(15, 15, 30, 0.85);
+            --bg-card: rgba(15, 15, 30, 0.88);
             --primary-blue: #2a52be;
             --bright-blue: #00d2ff;
             --purple-dark: #1f0c38;
@@ -44,8 +44,8 @@
             position: relative;
         }
 
-        /* Partículas de Fundo Animadas */
-        .bg-particles {
+        /* Partículas e Micro-organismos de Fundo Animados */
+        .bg-microorganisms {
             position: fixed;
             top: 0;
             left: 0;
@@ -53,19 +53,25 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
+            overflow: hidden;
         }
 
-        .particle {
+        .micro-organism {
             position: absolute;
-            border-radius: 50%;
-            background: rgba(138, 43, 226, 0.25);
-            box-shadow: 0 0 10px var(--purple-glow);
-            animation: float 15s infinite ease-in-out;
+            opacity: 0.22;
+            animation: floatMicro 22s infinite ease-in-out;
+            filter: drop-shadow(0 0 6px var(--purple-glow));
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
-            50% { transform: translateY(-100px) scale(1.3); opacity: 0.8; }
+        @keyframes floatMicro {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: translateY(-120px) rotate(180deg) scale(1.15);
+                opacity: 0.35;
+            }
         }
 
         /* Header e Título */
@@ -73,7 +79,7 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            padding: 30px 20px 10px;
+            padding: 25px 20px 10px;
         }
 
         header h1 {
@@ -94,26 +100,26 @@
             letter-spacing: 1px;
         }
 
-        /* Navegação Superior */
+        /* Navegação por Abas Principais */
         nav {
             position: relative;
             z-index: 10;
             display: flex;
             justify-content: center;
-            gap: 10px;
-            padding: 15px 20px;
+            gap: 8px;
+            padding: 12px 20px;
             flex-wrap: wrap;
         }
 
         .nav-btn {
-            background: rgba(20, 20, 45, 0.8);
+            background: rgba(20, 20, 45, 0.85);
             color: var(--text-muted);
             border: 1px solid var(--border-glow);
-            padding: 10px 20px;
+            padding: 9px 16px;
             border-radius: 30px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.4s ease;
             backdrop-filter: blur(10px);
@@ -137,7 +143,7 @@
             position: relative;
             z-index: 10;
             max-width: 950px;
-            margin: 10px auto 30px;
+            margin: 10px auto 20px;
             padding: 0 60px;
             width: 100%;
             flex-grow: 1;
@@ -335,15 +341,15 @@
             filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.3));
         }
         .hour-hand {
-            animation: rotateHand 43200s linear infinite; /* 12 horas por volta */
+            animation: rotateHand 43200s linear infinite;
             transform-origin: 100px 100px;
         }
         .minute-hand {
-            animation: rotateHand 3600s linear infinite; /* 60 min por volta */
+            animation: rotateHand 3600s linear infinite;
             transform-origin: 100px 100px;
         }
         .second-hand {
-            animation: rotateHand 60s linear infinite; /* 60 seg por volta (movimento suave contínuo) */
+            animation: rotateHand 60s linear infinite;
             transform-origin: 100px 100px;
         }
         @keyframes rotateHand {
@@ -391,6 +397,15 @@
             to { transform: rotate(360deg); }
         }
 
+        /* SVG Personagem - Pág 6: Conclusão / O Fim */
+        .end-star {
+            animation: starPulse 2s infinite ease-in-out;
+        }
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--bright-blue)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--purple-glow)); }
+        }
+
         /* Indicador de Páginas em Pontos */
         .dots-container {
             display: flex;
@@ -433,19 +448,19 @@
         /* Responsividade */
         @media (max-width: 768px) {
             .carousel-wrapper { padding: 0 10px; }
-            .arrow-btn { display: none; } /* Em telas móveis usa o toque/botões */
+            .arrow-btn { display: none; }
             header h1 { font-size: 1.8rem; }
-            .nav-btn { font-size: 0.8rem; padding: 8px 14px; }
+            .nav-btn { font-size: 0.75rem; padding: 7px 12px; }
             .slide { padding: 25px 20px; }
             h2 { font-size: 1.3rem; }
-            .slides-container { min-height: 600px; }
+            .slides-container { min-height: 620px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Partículas Animadas no Fundo -->
-    <div class="bg-particles" id="particles"></div>
+    <!-- Micro-organismos Decorativos Animados no Fundo (Vírus, Bactérias e Fungos) -->
+    <div class="bg-microorganisms" id="microContainer"></div>
 
     <!-- Cabeçalho -->
     <header>
@@ -456,10 +471,11 @@
     <!-- Navegação por Abas Principais -->
     <nav>
         <button class="nav-btn active" onclick="goToSlide(0)">01. Funcionamento</button>
-        <button class="nav-btn" onclick="goToSlide(1)">02. Importância do Uso</button>
-        <button class="nav-btn" onclick="goToSlide(2)">03. Opções Não Diárias</button>
+        <button class="nav-btn" onclick="goToSlide(1)">02. Importância</button>
+        <button class="nav-btn" onclick="goToSlide(2)">03. Opções</button>
         <button class="nav-btn" onclick="goToSlide(3)">04. Comparativo</button>
-        <button class="nav-btn" onclick="goToSlide(4)">05. Proteção contra ISTs</button>
+        <button class="nav-btn" onclick="goToSlide(4)">05. Proteção ISTs</button>
+        <button class="nav-btn" onclick="goToSlide(5)">06. Conclusão / Fim</button>
     </nav>
 
     <!-- Carrossel com Botões de Setas -->
@@ -511,26 +527,15 @@
                 <div class="character-container">
                     <!-- RELÓGIO COM MOVIMENTO NORMAL E SUAVE -->
                     <svg class="clock-svg" viewBox="0 0 200 200">
-                        <!-- Mostrador do Relógio -->
                         <circle cx="100" cy="100" r="85" fill="rgba(15, 15, 35, 0.8)" stroke="#8a2be2" stroke-width="5"/>
                         <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(0, 210, 255, 0.2)" stroke-width="2"/>
-                        
-                        <!-- Marcadores das Horas (12, 3, 6, 9) -->
                         <line x1="100" y1="25" x2="100" y2="35" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
                         <line x1="175" y1="100" x2="165" y2="100" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
                         <line x1="100" y1="175" x2="100" y2="165" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
                         <line x1="25" y1="100" x2="35" y2="100" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
-
-                        <!-- Ponteiro das Horas (Lento) -->
                         <line class="hour-hand" x1="100" y1="100" x2="100" y2="60" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-                        
-                        <!-- Ponteiro dos Minutos (Médio) -->
                         <line class="minute-hand" x1="100" y1="100" x2="100" y2="42" stroke="#00d2ff" stroke-width="4" stroke-linecap="round"/>
-                        
-                        <!-- Ponteiro dos Segundos (Rotação Suave) -->
                         <line class="second-hand" x1="100" y1="100" x2="100" y2="30" stroke="#bd00ff" stroke-width="2" stroke-linecap="round"/>
-
-                        <!-- Centro do Relógio -->
                         <circle cx="100" cy="100" r="6" fill="#fff" stroke="#bd00ff" stroke-width="2"/>
                     </svg>
                 </div>
@@ -538,7 +543,7 @@
                 <p>A eficácia da pílula exige uso rigoroso. A ingestão diária no mesmo horário mantém os níveis hormonais sanguíneos constantes e estáveis.</p>
 
                 <div class="highlight-box">
-                    <p><strong>Efeito das Atrasos:</strong> Esquecimentos ou variações de horário causam quedas hormonais. Isso pode disparar a ovulação de forma imprevista, reduzindo a eficácia do método e elevando o risco de gravidez.</p>
+                    <p><strong>Efeito dos Atrasos:</strong> Esquecimentos ou variações de horário causam quedas hormonais. Isso pode disparar a ovulação de forma imprevista, reduzindo a eficácia do método e elevando o risco de gravidez.</p>
                 </div>
 
                 <p>Como Marina tem dificuldades para manter essa rotina diária, recomenda-se a transição para um método que não exija lembrança diária.</p>
@@ -662,6 +667,32 @@
                 <p><strong>Orientação:</strong> Recomenda-se a <em>Dupla Proteção</em>, associando o uso da camisinha a um método contraceptivo de longa duração escolhido por Marina.</p>
             </article>
 
+            <!-- SLIDE 6 (FIM / CONCLUSÃO) -->
+            <article class="slide">
+                <h2 style="justify-content: center;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Conclusão e Encerramento
+                </h2>
+
+                <div class="character-container">
+                    <!-- SVG Animado de Estrela / Selo de Conclusão -->
+                    <svg class="end-star" width="140" height="140" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="75" fill="rgba(31, 12, 56, 0.8)" stroke="url(#pillGrad)" stroke-width="5"/>
+                        <polygon points="100,35 120,75 165,80 130,112 140,155 100,132 60,155 70,112 35,80 80,75" fill="#00d2ff"/>
+                    </svg>
+                </div>
+
+                <div class="highlight-box" style="text-align: center; border-left: none; border-top: 3px solid var(--purple-glow);">
+                    <p style="font-size: 1.2rem; color: #fff; font-weight: 600; margin-bottom: 8px;">Solução Recomendada para Marina:</p>
+                    <p style="margin-bottom: 0;">Adoção de um método LARC (Implante Subdérmico ou DIU Hormonal) para total comodidade contraceptiva, atrelado ao uso constante da camisinha para garantia de saúde e prevenção contra ISTs.</p>
+                </div>
+
+                <p style="text-align: center; font-size: 1.3rem; font-family: 'Cinzel', serif; color: var(--bright-blue); margin-top: 25px;">
+                    ✦ OBRIGADO PELA ATENÇÃO! ✦
+                </p>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">Fim da Apresentação do Trabalho de Biologia</p>
+            </article>
+
         </div>
 
         <!-- Seta Direita -->
@@ -738,19 +769,48 @@
             }
         });
 
-        // Partículas de Fundo
-        const particleContainer = document.getElementById('particles');
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            const size = Math.random() * 6 + 2;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.animationDelay = `${Math.random() * 15}s`;
-            particle.style.animationDuration = `${10 + Math.random() * 10}s`;
-            particleContainer.appendChild(particle);
+        // Gerador de Decorativos Biológicos de Fundo (Vírus, Bactérias e Fungos em SVG)
+        const microContainer = document.getElementById('microContainer');
+
+        const microTypes = [
+            // 1. VÍRUS (Spiro/Corona)
+            `<svg width="50" height="50" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="28" fill="#8a2be2"/>
+                <circle cx="50" cy="12" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="50" y2="12" stroke="#00d2ff" stroke-width="3"/>
+                <circle cx="50" cy="88" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="50" y2="88" stroke="#00d2ff" stroke-width="3"/>
+                <circle cx="12" cy="50" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="12" y2="50" stroke="#00d2ff" stroke-width="3"/>
+                <circle cx="88" cy="50" r="5" fill="#00d2ff"/><line x1="50" y1="50" x2="88" y2="50" stroke="#00d2ff" stroke-width="3"/>
+                <circle cx="23" cy="23" r="5" fill="#bd00ff"/><line x1="50" y1="50" x2="23" y2="23" stroke="#bd00ff" stroke-width="3"/>
+                <circle cx="77" cy="77" r="5" fill="#bd00ff"/><line x1="50" y1="50" x2="77" y2="77" stroke="#bd00ff" stroke-width="3"/>
+            </svg>`,
+            // 2. BACTÉRIA (Bacilo com Flagelos)
+            `<svg width="60" height="40" viewBox="0 0 120 80">
+                <rect x="25" y="20" width="70" height="40" rx="20" fill="#2a52be" stroke="#00d2ff" stroke-width="3"/>
+                <path d="M 10 25 Q 0 40 10 55" fill="none" stroke="#bd00ff" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 5 15 Q -10 40 5 65" fill="none" stroke="#8a2be2" stroke-width="3" stroke-linecap="round"/>
+            </svg>`,
+            // 3. FUNGO (Cogumelo / Esporo)
+            `<svg width="50" height="50" viewBox="0 0 100 100">
+                <path d="M 20 50 Q 50 10 80 50 Z" fill="#bd00ff" stroke="#00d2ff" stroke-width="3"/>
+                <rect x="42" y="50" width="16" height="35" rx="5" fill="#2a52be"/>
+                <circle cx="38" cy="35" r="4" fill="#fff"/>
+                <circle cx="62" cy="35" r="4" fill="#fff"/>
+                <circle cx="50" cy="25" r="3" fill="#fff"/>
+            </svg>`
+        ];
+
+        // Criar 18 elementos espalhados no fundo
+        for (let i = 0; i < 18; i++) {
+            const div = document.createElement('div');
+            div.classList.add('micro-organism');
+            div.innerHTML = microTypes[i % microTypes.length];
+            
+            div.style.left = `${Math.random() * 92}%`;
+            div.style.top = `${Math.random() * 90}%`;
+            div.style.animationDelay = `${Math.random() * 20}s`;
+            div.style.animationDuration = `${18 + Math.random() * 12}s`;
+            
+            microContainer.appendChild(div);
         }
     </script>
 </body>
