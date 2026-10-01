@@ -3,107 +3,639 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estudo de Caso: Métodos Contraceptivos</title>
+    <title>Trabalho de Biologia - Métodos Contraceptivos</title>
+    <!-- Fontes Elegantes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-deep: #05050d;
+            --bg-card: rgba(15, 15, 30, 0.75);
+            --primary-blue: #2a52be;
+            --bright-blue: #00d2ff;
+            --purple-dark: #1f0c38;
+            --purple-accent: #8a2be2;
+            --purple-glow: #bd00ff;
+            --text-light: #e0e6ed;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(138, 43, 226, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(31, 12, 56, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(42, 82, 190, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(5, 5, 13, 1) 0%, transparent 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        /* Partículas de Fundo Animadas */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(138, 43, 226, 0.2);
+            box-shadow: 0 0 10px var(--purple-glow);
+            animation: float 15s infinite ease-in-out;
         }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-100px) scale(1.2); opacity: 0.7; }
+        }
+
+        /* Header e Título */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px 20px;
+            background: linear-gradient(180deg, rgba(10, 10, 25, 0.9) 0%, transparent 100%);
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--bright-blue) 50%, var(--purple-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* Navegação por Abas (Páginas) */
+        nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            padding: 10px 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(20, 20, 45, 0.8);
+            color: var(--text-muted);
+            border: 1px solid var(--border-glow);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            color: #fff;
+            border-color: var(--bright-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--purple-dark) 0%, var(--primary-blue) 100%);
+            color: #fff;
+            border-color: var(--purple-glow);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.6);
+        }
+
+        /* Área de Conteúdo Principal */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 20px auto 40px;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        /* Estilo das "Páginas" */
+        .page {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(138, 43, 226, 0.1);
+            backdrop-filter: blur(15px);
+            animation: fadeInPage 0.6s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Títulos Internos */
         h2 {
-            color: #2980b9;
-            margin-top: 25px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--purple-glow);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 10px rgba(189, 0, 255, 0.3);
         }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+        }
+
+        ul li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--bright-blue);
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px var(--bright-blue);
+        }
+
+        /* Destaques e Caixas Especiais */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(31, 12, 56, 0.8) 0%, rgba(42, 82, 190, 0.3) 100%);
+            border-left: 4px solid var(--purple-glow);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tabela Personalizada na Página 4 */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
             text-align: left;
+            background: rgba(10, 10, 25, 0.6);
         }
+
         th {
-            background-color: #3498db;
-            color: white;
+            background: linear-gradient(90deg, var(--purple-dark), var(--primary-blue));
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            padding: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
         }
-        .alert-box {
-            background-color: #e8f4f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin: 20px 0;
+
+        tr:hover {
+            background: rgba(138, 43, 226, 0.08);
+        }
+
+        /* CONTAINER DE PERSONAGENS E ANIMAÇÕES */
+        .character-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+            height: 180px;
+            position: relative;
+        }
+
+        /* SVG Personagem - Pág 1: Marina Pensativa com Pílula Animada */
+        .char-pill {
+            width: 160px;
+            height: 160px;
+        }
+        .pill-organism {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+        .hormone-particle {
+            animation: floatAround 4s infinite linear;
+            transform-origin: center;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--purple-glow)); }
+            50% { filter: drop-shadow(0 0 20px var(--bright-blue)); }
+        }
+        @keyframes floatAround {
+            0% { transform: rotate(0deg) translate(35px) rotate(0deg); }
+            100% { transform: rotate(360deg) translate(35px) rotate(-360deg); }
+        }
+
+        /* SVG Personagem - Pág 2: Alarme / Relógio de Precisão */
+        .clock-char {
+            animation: ringBell 2s infinite ease-in-out;
+            transform-origin: top center;
+        }
+        @keyframes ringBell {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30% { transform: rotate(8deg); }
+            20%, 40% { transform: rotate(-8deg); }
+            50% { transform: rotate(0deg); }
+        }
+
+        /* SVG Personagem - Pág 3: Opções / Calendário Sem Estresse */
+        .calendar-char {
+            animation: bounceSoft 2s infinite ease-in-out;
+        }
+        @keyframes bounceSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* SVG Personagem - Pág 4: Comparativo / Balança Futurista */
+        .scale-left {
+            animation: scaleMove 3s infinite ease-in-out;
+            transform-origin: center;
+        }
+        .scale-right {
+            animation: scaleMove 3s infinite ease-in-out reverse;
+            transform-origin: center;
+        }
+        @keyframes scaleMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* SVG Personagem - Pág 5: Escudo de Proteção (ISTs) */
+        .shield-char {
+            animation: shieldPulse 2.5s infinite ease-in-out;
+        }
+        .shield-spark {
+            animation: sparkRotate 6s infinite linear;
+            transform-origin: 100px 100px;
+        }
+        @keyframes shieldPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px var(--bright-blue)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--bright-blue)); }
+        }
+        @keyframes sparkRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Rodapé */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(5, 5, 13, 0.9);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .nav-btn { font-size: 0.85rem; padding: 10px 16px; }
+            .page { padding: 25px; }
+            h2 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Resolução da Situação-Problema: Métodos Contraceptivos</h1>
 
-        <h2>1. Como funciona a pílula anticoncepcional?</h2>
-        <p>A pílula anticoncepcional oral combinada contém hormônios sintéticos (estrogênio e progestágeno) semelhantes aos produzidos pelo corpo feminino. Eles atuam principalmente inibindo a ovulação, evitando que o ovário libere o óvulo. Além disso, os hormônios alteram o muco cervical, tornando-o mais espesso para dificultar a passagem dos espermatozoides, e modificam o endométrio para impedir a nidação.</p>
+    <!-- Partículas Animadas no Fundo -->
+    <div class="bg-particles" id="particles"></div>
 
-        <h2>2. Por que é importante utilizá-la corretamente?</h2>
-        <p>A eficácia da pílula depende do uso rigoroso. Tomar o comprimido no mesmo horário todos os dias mantém os níveis hormonais estáveis no sangue. Falhas, esquecimentos ou variações constantes nos horários causam quedas hormonais que podem disparar o processo de ovulação, reduzindo a eficácia do método e aumentando o risco de uma gravidez não planejada.</p>
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Trabalho de Biologia</h1>
+        <p>Estudo de Caso: Marina e a Saúde Reprodutiva</p>
+    </header>
 
-        <h2>3. Quais métodos não precisam ser utilizados diariamente?</h2>
-        <p>Existem diversas opções de contracepção de longa duração ou de uso não diário, tais como:</p>
-        <ul>
-            <li>Dispositivo Intrauterino (DIU) de Cooper ou Hormonal (Mirena/Kyleena)</li>
-            <li>Implante contraceptivo subdérmico</li>
-            <li>Injeções anticoncepcionais (mensais ou trimestrais)</li>
-            <li>Anel vaginal (troca mensal)</li>
-            <li>Adesivo cutâneo (troca semanal)</li>
-        </ul>
+    <!-- Navegação Interativa entre Páginas -->
+    <nav>
+        <button class="nav-btn active" onclick="switchPage(1)">
+            <span>01.</span> Funcionamento
+        </button>
+        <button class="nav-btn" onclick="switchPage(2)">
+            <span>02.</span> Importância do Uso
+        </button>
+        <button class="nav-btn" onclick="switchPage(3)">
+            <span>03.</span> Opções Não Diárias
+        </button>
+        <button class="nav-btn" onclick="switchPage(4)">
+            <span>04.</span> Comparativo
+        </button>
+        <button class="nav-btn" onclick="switchPage(5)">
+            <span>05.</span> Proteção contra ISTs
+        </button>
+    </nav>
 
-        <h2>4. Comparativo entre dois métodos: DIU Hormonal vs. Implante Subdérmico</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Método</th>
-                    <th>Vantagens</th>
-                    <th>Limitações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>DIU Hormonal</strong></td>
-                    <li>Eficácia elevada por até 5 a 8 anos (dependendo do modelo).<br>Atua de forma localizada no útero.<br>Pode reduzir ou cessar o fluxo menstrual e as cólicas.</li>
-                    <li>Exige inserção por profissional médico em consultório.<br>Pode causar sangramentos irregulares nos primeiros meses.<br>Risco raro de expulsão do dispositivo.</li>
-                </tr>
-                <tr>
-                    <td><strong>Implante Subdérmico</strong></td>
-                    <li>Método contraceptivo de maior eficácia disponível.<br>Dura até 3 anos.<br>Aplicação simples e rápida no braço.</li>
-                    <li>Pode alterar o padrão menstrual (escapamentos ou ausência de menstruação).<br>Requer procedimento de inserção e remoção por médico.<br>Custo inicial mais elevado.</li>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Conteúdo Principal -->
+    <main>
 
-        <h2>5. Proteção contra Infecções Sexualmente Transmissíveis (ISTs)</h2>
-        <div class="alert-box">
-            <p><strong>Atenção:</strong> Nenhum dos métodos hormonais ou de longa duração (pílula, DIU, implante, injeção ou anel) protege contra Infecções Sexualmente Transmissíveis (ISTs).</p>
-            <p>O único método que oferece proteção dupla (contra gravidez e contra ISTs, como HIV, sífilis e HPV) é a <strong>camisinha (preservativo masculino ou feminino)</strong>, que funciona como uma barreira física. Por isso, recomenda-se a dupla proteção: o uso combinado do preservativo com o método contraceptivo escolhido.</p>
-        </div>
-    </div>
+        <!-- PÁGINA 1 -->
+        <article id="page-1" class="page active">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Como funciona a pílula anticoncepcional?
+            </h2>
+
+            <div class="character-container">
+                <!-- Personagem/Animação SVG: Pílula e Bloqueio Hormonal -->
+                <svg class="char-pill" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="pillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#bd00ff" />
+                            <stop offset="100%" stop-color="#00d2ff" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(138, 43, 226, 0.2)" stroke-width="4" />
+                    <!-- Núcleo Celular/Ovário Protegido -->
+                    <circle class="pill-organism" cx="100" cy="100" r="40" fill="url(#pillGrad)" />
+                    <!-- Partículas Hormonais Orbitando -->
+                    <circle class="hormone-particle" cx="100" cy="100" r="7" fill="#00d2ff" />
+                    <circle class="hormone-particle" cx="100" cy="100" r="5" fill="#bd00ff" style="animation-delay: -2s;" />
+                </svg>
+            </div>
+
+            <p>A pílula anticoncepcional oral combinada é composta por hormônios sintéticos similares aos produzidos naturalmente pelo organismo feminino: o <strong>estrogênio</strong> e o <strong>progestágeno</strong>.</p>
+            
+            <p>O mecanismo principal de ação consiste em:</p>
+            <ul>
+                <li><strong>Inibição da Ovulação:</strong> Os hormônios emitem sinais ao cérebro (hipófise) para interromper a liberação dos hormônios FSH e LH, impedindo que os ovários amadureçam e liberem o óvulo.</li>
+                <li><strong>Alteração do Muco Cervical:</strong> O muco produzido no colo do útero se torna significativamente mais espesso e denso, criando uma barreira física que dificulta o deslocamento dos espermatozoides.</li>
+                <li><strong>Modificação do Endométrio:</strong> A camada interna do útero permanece fina e inóspita, prevenindo o processo de nidação (fixação de um eventual óvulo fertilizado).</li>
+            </ul>
+        </article>
+
+        <!-- PÁGINA 2 -->
+        <article id="page-2" class="page">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Por que é importante utilizá-la corretamente?
+            </h2>
+
+            <div class="character-container">
+                <!-- Personagem/Animação SVG: Relógio Bio-Digital Interativo -->
+                <svg width="160" height="160" viewBox="0 0 200 200">
+                    <g class="clock-char">
+                        <circle cx="100" cy="100" r="60" fill="none" stroke="#8a2be2" stroke-width="6"/>
+                        <circle cx="100" cy="40" r="8" fill="#00d2ff"/>
+                        <circle cx="160" cy="100" r="8" fill="#00d2ff"/>
+                        <circle cx="100" cy="160" r="8" fill="#00d2ff"/>
+                        <circle cx="40" cy="100" r="8" fill="#00d2ff"/>
+                        <line x1="100" y1="100" x2="100" y2="60" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="100" y1="100" x2="130" y2="100" stroke="#bd00ff" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="100" cy="100" r="6" fill="#fff"/>
+                    </g>
+                </svg>
+            </div>
+
+            <p>A máxima eficácia da pílula anticoncepcional depende inteiramente do rigor na rotina de uso. A ingestão diária no mesmo horário garante que os níveis hormonais no sangue permaneçam constantes e estáveis.</p>
+
+            <div class="highlight-box">
+                <p><strong>O Risco das Falhas:</strong> Esquecimentos, atrasos frequentes ou alterações na rotina diária provocam oscilações nos níveis hormonais sanguíneos. Essa queda pode permitir que o organismo reinicie o ciclo natural e libere um óvulo, reduzindo drasticamente a proteção e elevando o risco de gravidez não planejada.</p>
+            </div>
+
+            <p>No caso de Marina, as dificuldades de adaptação ao horário fixo diário tornam esse método vulnerável a falhas operacionais, justificando a busca por alternativas de longa duração.</p>
+        </article>
+
+        <!-- PÁGINA 3 -->
+        <article id="page-3" class="page">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Quais métodos não precisam de uso diário?
+            </h2>
+
+            <div class="character-container">
+                <!-- Personagem/Animação SVG: Calendário e Liberdade -->
+                <svg class="calendar-char" width="160" height="160" viewBox="0 0 200 200">
+                    <rect x="40" y="40" width="120" height="120" rx="15" fill="rgba(31, 12, 56, 0.9)" stroke="#00d2ff" stroke-width="4"/>
+                    <path d="M 40 70 L 160 70" stroke="#8a2be2" stroke-width="4"/>
+                    <circle cx="70" cy="100" r="8" fill="#bd00ff"/>
+                    <circle cx="100" cy="100" r="8" fill="#bd00ff"/>
+                    <circle cx="130" cy="100" r="8" fill="#bd00ff"/>
+                    <circle cx="70" cy="130" r="8" fill="#00d2ff"/>
+                    <!-- Checagem / Sucesso -->
+                    <path d="M110 130 L125 145 L150 115" fill="none" stroke="#00d2ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <p>Para pacientes que buscam praticidade e independência de lembretes diários, a medicina dispõe dos Métodos Contraceptivos Reversíveis de Longa Ação (LARC) e de aplicação periódica:</p>
+
+            <ul>
+                <li><strong>Implante Subdérmico:</strong> Pequeno bastão flexível inserido sob a pele do braço que libera progestágeno de forma contínua por até 3 anos.</li>
+                <li><strong>DIU Hormonal (Mirena / Kyleena):</strong> Dispositivo inserido na cavidade uterina que libera levonorgestrel por 3 a 8 anos.</li>
+                <li><strong>DIU de Cobre / Prata:</strong> Dispositivo não hormonal de longa duração (até 10 anos) que cria um ambiente espermicida no útero.</li>
+                <li><strong>Injeções Contraceptivas:</strong> Aplicações musculares realizadas mensalmente ou a cada 3 meses.</li>
+                <li><strong>Anel Vaginal:</strong> Anel flexível de uso mensal (permanece 3 semanas e é retirado por 1 semana).</li>
+                <li><strong>Adesivo Cutâneo:</strong> Aplicado sobre a pele e substituído semanalmente durante 3 semanas consecutivas.</li>
+            </ul>
+        </article>
+
+        <!-- PÁGINA 4 -->
+        <article id="page-4" class="page">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"/><path d="M18 8l4 4-4 4"/><path d="M22 12H11"/></svg>
+                Comparativo: DIU Hormonal vs. Implante Subdérmico
+            </h2>
+
+            <div class="character-container">
+                <!-- Personagem/Animação SVG: Balança de Comparação Futurista -->
+                <svg width="200" height="140" viewBox="0 0 200 140">
+                    <line x1="100" y1="20" x2="100" y2="120" stroke="#8a2be2" stroke-width="4"/>
+                    <line x1="40" y1="40" x2="160" y2="40" stroke="#00d2ff" stroke-width="4"/>
+                    <!-- Prato Esquerdo -->
+                    <g class="scale-left">
+                        <line x1="40" y1="40" x2="20" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                        <line x1="40" y1="40" x2="60" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                        <rect x="15" y="80" width="50" height="10" rx="5" fill="#bd00ff"/>
+                    </g>
+                    <!-- Prato Direito -->
+                    <g class="scale-right">
+                        <line x1="160" y1="40" x2="140" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                        <line x1="160" y1="40" x2="180" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                        <rect x="135" y="80" width="50" height="10" rx="5" fill="#00d2ff"/>
+                    </g>
+                </svg>
+            </div>
+
+            <p>Comparamos duas das opções mais recomendadas para o perfil de Marina:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Vantagens</th>
+                            <th>Limitações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DIU Hormonal</strong><br><small style="color:var(--bright-blue);">Duração: 3 a 8 anos</small></td>
+                            <td>
+                                • Ação local concentrada no útero.<br>
+                                • Reduz significativamente o fluxo e as cólicas menstruais.<br>
+                                • Não requer nenhuma intervenção após inserido.
+                            </td>
+                            <td>
+                                • Exige procedimento de inserção por ginecologista.<br>
+                                • Pode causar pequenos sangramentos irregulares (escapamentos) nos primeiros meses.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Implante Subdérmico</strong><br><small style="color:var(--bright-blue);">Duração: 3 anos</small></td>
+                            <td>
+                                • Método de maior eficácia contraceptiva existente.<br>
+                                • Inserção rápida no braço sob anestesia local.<br>
+                                • Totalmente discreto e imperceptível.
+                            </td>
+                            <td>
+                                • Custo inicial mais elevado.<br>
+                                • Pode alterar o padrão do ciclo menstrual (causar ausência de menstruação ou sangramentos sutis contínuos).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <!-- PÁGINA 5 -->
+        <article id="page-5" class="page">
+            <h2>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Proteção contra ISTs (Infecções Sexualmente Transmissíveis)
+            </h2>
+
+            <div class="character-container">
+                <!-- Personagem/Animação SVG: Escudo de Barreira Celular -->
+                <svg class="shield-char" width="160" height="160" viewBox="0 0 200 200">
+                    <path class="shield-spark" d="M100 20 L160 50 V110 C160 150 100 180 100 180 C100 180 40 150 40 110 V50 Z" fill="none" stroke="url(#pillGrad)" stroke-width="6"/>
+                    <path d="M100 35 L145 60 V105 C145 138 100 162 100 162 C100 162 55 138 55 105 V60 Z" fill="rgba(0, 210, 255, 0.2)"/>
+                    <path d="M85 100 L95 110 L120 85" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <div class="highlight-box" style="border-left-color: var(--bright-blue);">
+                <p style="font-size: 1.15rem; color: #fff;"><strong>Resposta Direta:</strong> Não. Nem a pílula anticoncepcional nem qualquer outro método hormonal ou de longa duração (como DIU ou Implante) oferecem proteção contra Infecções Sexualmente Transmissíveis.</p>
+            </div>
+
+            <p>Os métodos hormonais previnem exclusivamente a gestação ao atuarem no sistema reprodutivo feminino. O único método capaz de criar uma barreira física eficaz contra patógenos (vírus, bactérias e fungos) transmissíveis pela via sexual — como HIV, Sífilis, Gonorreia e HPV — é o <strong>preservativo (camisinha masculina ou feminina)</strong>.</p>
+
+            <p><strong>Recomendação Médica:</strong> Para garantir saúde integral, orienta-se a estratégia de <em>Dupla Proteção</em>, associando o uso do preservativo (proteção contra ISTs) ao método contraceptivo de longa duração escolhido por Marina (proteção contra gravidez não planejada).</p>
+        </article>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Trabalho de Biologia &copy; 2026 — Desenvolvido em HTML/CSS Interativo</p>
+    </footer>
+
+    <!-- Script de Alternância das Páginas e Partículas -->
+    <script>
+        // Função para trocar de página (Aba)
+        function switchPage(pageNumber) {
+            // Esconde todas as páginas
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Remove classe ativa dos botões
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostra a página selecionada e ativa o botão correspondente
+            document.getElementById(`page-${pageNumber}`).classList.add('active');
+            buttons[pageNumber - 1].classList.add('active');
+
+            // Rola suavemente para o topo do conteúdo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Criador de Partículas de Fundo Animadas
+        const particleContainer = document.getElementById('particles');
+        const particleCount = 20;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const size = Math.random() * 6 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            particle.style.animationDelay = `${Math.random() * 15}s`;
+            particle.style.animationDuration = `${10 + Math.random() * 10}s`;
+            
+            particleContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
